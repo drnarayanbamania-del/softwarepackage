@@ -1,0 +1,18 @@
+<% if (saved){ %><div class="ok">Settings saved.</div><% } %>
+<form class="card form" method="post" action="/admin/settings">
+  <h2>Site</h2>
+  <label>Site name</label><input name="site_name" value="<%= cfg.site.name %>">
+  <label>Tagline</label><input name="tagline" value="<%= cfg.site.tagline %>">
+  <div class="row">
+    <div><label>Items per page</label><input name="itemsPerPage" type="number" value="<%= cfg.site.itemsPerPage %>"></div>
+    <div><label>Loader seconds</label><input name="loaderDuration" type="number" value="<%= cfg.download.loaderDurationSeconds %>"></div>
+  </div>
+  <h2>Ad slots (Adsterra)</h2>
+  <% ['popunder','smartlink','nativeBanner','banner','socialBar'].forEach(function(k){ %>
+    <div class="adrow">
+      <label class="ck"><input type="checkbox" name="ad_<%= k %>" <%= cfg.ads[k].enabled?'checked':'' %>> <%= k %></label>
+      <input name="zone_<%= k %>" value="<%= cfg.ads[k].zoneId %>" placeholder="Zone ID">
+    </div>
+  <% }); %>
+  <div class="actions"><button class="btn-p">Save settings</button></div>
+</form>

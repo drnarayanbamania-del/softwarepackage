@@ -1,0 +1,29 @@
+{
+  "site": {
+    "name": "Bamania's Software Hub",
+    "tagline": "Free Windows Software Downloads",
+    "description": "Trusted, tested, and virus-free software.",
+    "itemsPerPage": 6,
+    "port": 3000
+  },
+  "paths": {
+    "storage": "./storage",
+    "database": "./database/database.sqlite"
+  },
+  "download": {
+    "loaderDurationSeconds": 5,
+    "suggestionsCount": 4
+  },
+  "ads": {
+    "provider": "adsterra",
+    "enabled": true,
+    "popunder": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "page": "download", "frequencyCapPerSession": 1, "devices": ["desktop"] },
+    "smartlink": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "page": "download", "frequencyCapPerSession": 1, "devices": ["mobile"] },
+    "nativeBanner": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "pages": ["home", "search"] },
+    "banner": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "pages": ["softwareDetail"] },
+    "socialBar": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "page": "download", "dismissible": true }
+  },
+  "admin": {
+    "sessionSecret": "e20b3ea70ff38bf1b34c26a578eeef62"
+  }
+}

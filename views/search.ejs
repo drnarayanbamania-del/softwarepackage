@@ -1,0 +1,26 @@
+<div class="wrap">
+  <div class="searchbar"><form class="big" action="/search" method="get">
+    <i data-lucide="search"></i><input type="search" name="q" value="<%= q %>" placeholder="Search software...">
+  </form></div>
+  <div class="layout">
+    <aside class="filters"><h3>Category</h3>
+      <a class="opt <%= !cat?'active':'' %>" href="/search<%= q?'?q='+encodeURIComponent(q):'' %>"><i data-lucide="layout-grid"></i>All</a>
+      <% cats.forEach(function(c){ %>
+        <a class="opt <%= cat===c.slug?'active':'' %>" href="/search?cat=<%= c.slug %><%= q?'&q='+encodeURIComponent(q):'' %>"><i data-lucide="folder"></i><%= c.name %></a>
+      <% }); %>
+    </aside>
+    <div class="results">
+      <p class="meta num"><strong><%= results.length %></strong> result<%= results.length===1?'':'s' %><%= q?' for "'+q+'"':'' %></p>
+      <% if (results.length){ %>
+        <div class="grid">
+          <% results.forEach(function(s, i){ %>
+            <%- include('partials/card', { s }) %>
+            <% if (i === 2) { %><%- include('partials/ad', { slot: 'nativeBanner', page: 'search' }) %><% } %>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <div class="empty"><i data-lucide="search-x"></i><h3>No software found</h3><p>Try a different term or category.</p></div>
+      <% } %>
+    </div>
+  </div>
+</div>

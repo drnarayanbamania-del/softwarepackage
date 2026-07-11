@@ -1,0 +1,10 @@
+<div class="grid2">
+  <form class="card form" method="post" action="/admin/categories/new">
+    <h2>Add category</h2><label>Name</label><input name="name" required>
+    <div class="actions"><button class="btn-p">Add</button></div>
+  </form>
+  <div class="card"><table><thead><tr><th>Name</th><th>Apps</th><th></th></tr></thead><tbody>
+    <% rows.forEach(function(c){ %><tr><td><%= c.name %></td><td><%= c.n %></td>
+      <td class="ra"><form method="post" action="/admin/categories/<%= c.id %>/delete" onsubmit="return confirm('<%= c.n %> app(s) will be uncategorized. Delete <%= c.name %>?')"><button class="ib del"><i data-lucide="trash-2"></i></button></form></td></tr><% }); %>
+  </tbody></table></div>
+</div>

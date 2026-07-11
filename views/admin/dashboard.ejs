@@ -1,0 +1,12 @@
+<div class="tiles">
+  <div class="tile"><div class="n"><%= stats.software %></div><div class="l">Software</div></div>
+  <div class="tile"><div class="n"><%= stats.downloads %></div><div class="l">Downloads</div></div>
+  <div class="tile"><div class="n"><%= stats.views %></div><div class="l">Views</div></div>
+  <div class="tile"><div class="n"><%= stats.categories %></div><div class="l">Categories</div></div>
+</div>
+<div class="card"><div class="card-hd"><h2>Top downloads</h2></div>
+  <table><thead><tr><th>#</th><th>Software</th><th>Downloads</th></tr></thead><tbody>
+  <% top.forEach(function(t,i){ %><tr><td><%= i+1 %></td><td><a href="/software/<%= t.slug %>" target="_blank"><%= t.name %></a></td><td><%= t.download_count %></td></tr><% }); %>
+  <% if(!top.length){ %><tr><td colspan="3" class="muted">No data yet.</td></tr><% } %>
+  </tbody></table>
+</div>

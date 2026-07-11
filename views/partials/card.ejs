@@ -1,0 +1,12 @@
+<a href="/software/<%= s.slug %>" class="card">
+  <%- include('shot', { s }) %>
+  <div class="body">
+    <div class="top">
+      <span class="ic"><% if (s.icon_image) { %><img src="/<%= s.icon_image %>" alt=""><% } else { %><i data-lucide="package"></i><% } %></span>
+      <div><div class="nm"><%= s.name %></div><% if (s.category_name) { %><span class="tag"><%= s.category_name %></span><% } %></div>
+    </div>
+    <p class="desc"><%= s.short_description || '' %></p>
+    <div class="foot"><span class="size"><i data-lucide="hard-drive"></i><%= s.size || '' %></span>
+      <span class="go">Details <i data-lucide="chevron-right"></i></span></div>
+  </div>
+</a>

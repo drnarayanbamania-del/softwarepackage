@@ -1,0 +1,37 @@
+<div class="wrap">
+  <nav class="crumbs"><a href="/">Home</a><i data-lucide="chevron-right"></i>
+    <% if (sw.category_slug) { %><a href="/search?cat=<%= sw.category_slug %>"><%= sw.category_name %></a><i data-lucide="chevron-right"></i><% } %>
+    <span><%= sw.name %></span></nav>
+
+  <div class="detail">
+    <div>
+      <div class="dhead">
+        <span class="ic"><% if (sw.icon_image){ %><img src="/<%= sw.icon_image %>" alt=""><% } else { %><i data-lucide="package"></i><% } %></span>
+        <div><h1><%= sw.name %></h1><% if (sw.category_name){ %><span class="tag"><%= sw.category_name %></span><% } %></div>
+      </div>
+      <p class="mini"><%= sw.short_description || '' %></p>
+      <% if (sw.screenshot) { %>
+        <img class="detail-shot" src="/<%= sw.screenshot %>" alt="<%= sw.name %> screenshot">
+      <% } %>
+      <div class="specs num">
+        <div class="spec"><div class="k">Version</div><div class="v"><%= sw.version || '—' %></div></div>
+        <div class="spec"><div class="k">Size</div><div class="v"><%= sw.size || '—' %></div></div>
+        <div class="spec"><div class="k">Downloads</div><div class="v"><%= sw.download_count %></div></div>
+      </div>
+      <% if (sw.full_description){ %><div class="prose"><h2>About</h2><p><%= sw.full_description %></p></div><% } %>
+      <%- include('partials/ad', { slot: 'banner', page: 'softwareDetail' }) %>
+    </div>
+    <aside><div class="dl">
+      <div class="sz num"><%= sw.size || 'Free' %> <small>installer</small></div>
+      <div class="ver">Version <%= sw.version || 'latest' %> · Windows</div>
+      <a href="/download/<%= sw.slug %>" class="btn-dl"><i data-lucide="download"></i>Download</a>
+      <div class="safe"><i data-lucide="shield-check"></i>Scanned &amp; safe · No bundled software</div>
+    </div></aside>
+  </div>
+
+  <% if (related.length){ %>
+  <section class="block"><div class="sec-hd"><h2><i data-lucide="layers"></i>Related</h2></div>
+    <div class="grid"><% related.forEach(function(s){ %><%- include('partials/card', { s }) %><% }); %></div>
+  </section>
+  <% } %>
+</div>

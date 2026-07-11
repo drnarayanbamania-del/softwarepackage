@@ -1,0 +1,11 @@
+<%
+  var a = ads[slot];
+  var active = ads.enabled && a && a.enabled &&
+    ((a.pages && a.pages.includes(page)) || a.page === page);
+%>
+<% if (active) { %>
+<div class="ad" data-zone="<%= a.zoneId %>" role="complementary" aria-label="Advertisement">
+  <span class="ad-lbl">Advertisement</span>
+  <span class="ad-ph"><%= slot %> · <%= ads.provider %></span>
+</div>
+<% } %>

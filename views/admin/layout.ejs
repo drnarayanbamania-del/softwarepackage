@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= title %> · Admin</title><meta name="robots" content="noindex">
+<link rel="stylesheet" href="/css/admin.css">
+</head><body class="admin">
+<aside class="side">
+  <div class="side-lg"><b>Bamania's</b> Admin</div>
+  <nav>
+    <a href="/admin" class="<%= currentPath==='/admin'?'active':'' %>"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+    <a href="/admin/software" class="<%= currentPath.indexOf('/admin/software')===0?'active':'' %>"><i data-lucide="box"></i>Software</a>
+    <a href="/admin/categories" class="<%= currentPath.indexOf('/admin/categories')===0?'active':'' %>"><i data-lucide="tags"></i>Categories</a>
+    <a href="/admin/settings" class="<%= currentPath.indexOf('/admin/settings')===0?'active':'' %>"><i data-lucide="settings"></i>Settings</a>
+  </nav>
+  <a class="out" href="/admin/logout"><i data-lucide="log-out"></i>Log out</a>
+</aside>
+<main class="main"><header class="tb"><h1><%= title %></h1><a href="/" target="_blank" class="viewsite">View site</a></header>
+<div class="content"><%- body %></div></main>
+<script src="https://unpkg.com/lucide@latest"></script><script>lucide.createIcons();</script>
+</body></html>

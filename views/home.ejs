@@ -1,0 +1,41 @@
+<section class="hero"><div class="wrap hero-in">
+  <h1><%= config.site.tagline %></h1>
+  <p><%= config.site.description %> Browse <%= totals.software %>+ titles with <%= (totals.downloads/1000).toFixed(1) %>K+ downloads served.</p>
+  <form class="hero-search" action="/search" method="get">
+    <div class="box"><input type="search" name="q" placeholder="Search software..."></div>
+    <button type="submit">Search</button>
+  </form>
+</div></section>
+
+<div class="wrap">
+  <section class="block" id="categories">
+    <div class="sec-hd"><h2><i data-lucide="layout-grid"></i>Categories</h2></div>
+    <div class="cat-row">
+      <% cats.slice(0,12).forEach(function(c){ %>
+        <a href="/search?cat=<%= c.slug %>" class="cat"><i data-lucide="folder"></i><span class="nm"><%= c.name %></span><span class="ct num"><%= c.n %> app<%= c.n==1?'':'s' %></span></a>
+      <% }); %>
+    </div>
+  </section>
+
+  <% if (fresh.length) { %>
+  <section class="block"><div class="sec-hd"><h2><i data-lucide="sparkles"></i>New arrivals</h2></div>
+    <div class="grid"><% fresh.forEach(function(s){ %><%- include('partials/card', { s }) %><% }); %></div>
+  </section>
+  <% } %>
+
+  <% if (featured.length) { %>
+  <section class="block"><div class="sec-hd"><h2><i data-lucide="star"></i>Featured</h2></div>
+    <div class="grid"><% featured.forEach(function(s){ %><%- include('partials/card', { s }) %><% }); %></div>
+  </section>
+  <% } %>
+
+  <section class="block"><div class="sec-hd"><h2><i data-lucide="layout-grid"></i>All software</h2></div>
+    <div class="grid">
+      <% all.forEach(function(s, i){ %>
+        <%- include('partials/card', { s }) %>
+        <% if (i === 2) { %><%- include('partials/ad', { slot: 'nativeBanner', page: 'home' }) %><% } %>
+      <% }); %>
+    </div>
+    <div class="more"><a href="/search" class="btn">Browse all <i data-lucide="arrow-right"></i></a></div>
+  </section>
+</div>

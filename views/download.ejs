@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= title %></title><link rel="stylesheet" href="/css/style.css">
+<script>
+  (function() {
+    var savedTheme = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+</head>
+<body class="dl-page">
+<header class="site"><div class="wrap hd" style="justify-content:space-between">
+  <a href="/" class="logo"><%- include('partials/logo') %><span class="txt"><b>Bamania's</b><small>Software Hub</small></span></a>
+  <button class="theme-picker-btn" id="themeToggle" aria-label="Toggle Theme" style="color:var(--ink-soft);"><i data-lucide="sun"></i></button>
+</div></header>
+<div class="wrap dl-wrap">
+  <div class="panel">
+    <span class="ic"><% if (sw.icon_image){ %><img src="/<%= sw.icon_image %>" alt=""><% } else { %><i data-lucide="package"></i><% } %></span>
+    <h1>Preparing your download</h1>
+    <div class="name"><%= sw.name %> <%= sw.version || '' %></div>
+    <div class="loader" id="loader"><div class="track"><div class="fill" id="fill"></div></div>
+      <div class="status"><span class="spin"></span><span id="statusText">Getting your file ready...</span></div></div>
+    <div class="dl-ready" id="ready">
+      <a class="btn-dl" id="dlBtn" href="/api/file/<%= sw.slug %>"><i data-lucide="download"></i>Click here to download</a>
+      <p class="redl">Download didn't start? Click again.</p>
+    </div>
+  </div>
+  <% if (suggestions.length){ %>
+  <section class="sug"><h2><i data-lucide="thumbs-up"></i>You may also like</h2>
+    <div class="sgrid"><% suggestions.forEach(function(s){ %>
+      <a href="/software/<%= s.slug %>" class="scard"><span class="cic"><% if(s.icon_image){ %><img src="/<%= s.icon_image %>" alt=""><% }else{ %><i data-lucide="package"></i><% } %></span>
+        <div><div class="cnm"><%= s.name %></div><div class="csz"><%= s.size || '' %></div></div></a>
+    <% }); %></div>
+  </section>
+  <% } %>
+</div>
+<% if (ads.enabled && ads.socialBar.enabled){ %>
+<div class="socialbar" id="socialbar" role="complementary" aria-label="Advertisement">
+  <span class="ad-lbl">Advertisement</span><span class="ad-ph">socialBar · <%= ads.provider %></span>
+  <button class="x" id="closeSocial" aria-label="Dismiss"><i data-lucide="x"></i></button>
+</div>
+<% } %>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  var CFG = {
+    loader: <%= config.download.loaderDurationSeconds %>,
+    popunder: <%= ads.enabled && ads.popunder.enabled ? 'true':'false' %>,
+    smartlink: <%= ads.enabled && ads.smartlink.enabled ? 'true':'false' %>,
+    cap: <%= ads.popunder.frequencyCapPerSession || 1 %>
+  };
+</script>
+<script src="/js/main.js"></script>
+<script src="/js/download.js"></script>
+</body>
+</html>

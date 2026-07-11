@@ -1,0 +1,25 @@
+<form class="card form" method="post" enctype="multipart/form-data"
+  action="/admin/software<%= sw ? '/'+sw.id+'/edit' : '/new' %>">
+  <label>Name</label><input name="name" required value="<%= sw?sw.name:'' %>">
+  <div class="row">
+    <div><label>Category</label><select name="category_id"><option value="">—</option>
+      <% cats.forEach(function(c){ %><option value="<%= c.id %>" <%= sw&&sw.category_id===c.id?'selected':'' %>><%= c.name %></option><% }); %></select></div>
+    <div><label>Version</label><input name="version" value="<%= sw?sw.version||'':'' %>"></div>
+    <div><label>Size</label><input name="size" value="<%= sw?sw.size||'':'' %>"></div>
+  </div>
+  <label>Short description</label><input name="short_description" value="<%= sw?sw.short_description||'':'' %>">
+  <label>Full description</label><textarea name="full_description" rows="4"><%= sw?sw.full_description||'':'' %></textarea>
+  <div class="row">
+    <div><label>Icon image</label><input type="file" name="icon" accept="image/*">
+      <% if (sw && sw.icon_image){ %><img src="/<%= sw.icon_image %>" alt="" class="prev"><% } %></div>
+    <div><label>Screenshot</label><input type="file" name="screenshot" accept="image/*">
+      <% if (sw && sw.screenshot){ %><img src="/<%= sw.screenshot %>" alt="" class="prev shot-prev"><% } %></div>
+    <div><label>Installer file</label><input type="file" name="file">
+      <% if (sw && sw.file_path){ %><span class="ok-note">File uploaded</span><% } %></div>
+  </div>
+  <div class="checks">
+    <label class="ck"><input type="checkbox" name="is_featured" <%= sw&&sw.is_featured?'checked':'' %>> Featured</label>
+    <label class="ck"><input type="checkbox" name="is_new" <%= sw&&sw.is_new?'checked':'' %>> New</label>
+  </div>
+  <div class="actions"><a href="/admin/software" class="btn-g">Cancel</a><button class="btn-p"><%= sw?'Save':'Create' %></button></div>
+</form>

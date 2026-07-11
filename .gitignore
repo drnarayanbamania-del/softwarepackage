@@ -1,0 +1,8 @@
+node_modules/
+database/*.sqlite*
+storage/software/*
+storage/images/*
+!storage/**/.gitkeep
+*.log
+.DS_Store
+bamania-software-hub.zip

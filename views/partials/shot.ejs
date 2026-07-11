@@ -1,0 +1,29 @@
+<%
+  // per-category mock preview kind
+  var kind = ({ 'Media':'player','Development':'code','Graphics':'canvas','Browsers':'browser',
+    'Utilities':'tool','File Mgmt':'files' })[s.category_name] || 'files';
+%>
+<div class="shot">
+  <div class="titlebar"><span></span><span></span><span></span></div>
+  <% if (s.is_new) { %><span class="badge">New</span><% } %>
+  <% if (s.screenshot) { %>
+    <img class="sb real" src="/<%= s.screenshot %>" alt="<%= s.name %> screenshot" loading="lazy">
+  <% } else { %>
+    <div class="sb mock mock-<%= kind %>">
+      <% if (kind==='player'){ %>
+        <div class="m-screen"><span class="m-play"></span></div><div class="m-bar"><i></i></div>
+        <div class="m-ctrls"><span></span><span></span><span></span></div>
+      <% } else if (kind==='code'){ %>
+        <div class="m-code"><i style="width:35%;background:#b98bff"></i><i style="width:60%;margin-left:14px;background:#7fd88f"></i><i style="width:48%;margin-left:14px;background:#f0cf6b"></i><i style="width:30%;background:#8a86a0"></i><i style="width:52%;margin-left:14px;background:#f08c78"></i></div>
+      <% } else if (kind==='canvas'){ %>
+        <div class="m-tools"><em></em><em></em><em></em></div><div class="m-art"></div>
+      <% } else if (kind==='browser'){ %>
+        <div class="m-omni"></div><div class="m-hero"></div><i class="m-l" style="width:80%"></i><i class="m-l" style="width:60%"></i><i class="m-l" style="width:70%"></i>
+      <% } else if (kind==='tool'){ %>
+        <div class="m-grid"><span></span><span class="on"></span><span></span></div><i class="m-l" style="width:70%"></i><i class="m-l" style="width:85%"></i><i class="m-l" style="width:55%"></i>
+      <% } else { %>
+        <div class="m-file sel"><b></b><i style="width:50%"></i></div><div class="m-file"><b></b><i style="width:60%"></i></div><div class="m-file"><b></b><i style="width:45%"></i></div><div class="m-file"><b></b><i style="width:70%"></i></div>
+      <% } %>
+    </div>
+  <% } %>
+</div>
