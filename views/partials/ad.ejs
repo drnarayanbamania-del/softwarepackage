@@ -4,9 +4,45 @@
     ((a.pages && a.pages.includes(page)) || a.page === page);
 %>
 <% if (active) { %>
-<div class="ad-placement" style="margin: 16px 0; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 250px;">
-  <span class="ad-lbl" style="font-size: .64rem; font-weight: 700; text-transform: uppercase; color: var(--ad-label, #a09030); letter-spacing: .08em; margin-bottom: 8px; display: block;">Advertisement</span>
+<div class="ad-placement <%= slot === 'nativeBanner' ? 'card' : 'banner-placement' %>">
+  <span class="ad-lbl">Sponsored</span>
   <script async="async" data-cfasync="false" src="https://pl30315640.effectivecpmnetwork.com/<%= a.zoneId %>/invoke.js"></script>
-  <div id="container-<%= a.zoneId %>"></div>
+  <div id="container-<%= a.zoneId %>" class="ad-container-el"></div>
+  <div class="ad-placeholder-content" style="width: 100%; display: flex; flex-direction: column;">
+    <% if (slot === 'nativeBanner') { %>
+      <!-- Mock Sponsored Software Card -->
+      <div class="shot">
+        <div class="titlebar"><span></span><span></span><span></span></div>
+        <div class="sb mock mock-player" style="background:#1d1830;">
+          <div class="m-screen"><span class="m-play" style="border-left-color:var(--accent);"></span></div>
+          <div class="m-bar"><i style="background:var(--accent);"></i></div>
+        </div>
+      </div>
+      <div class="body" style="text-align: left; width: 100%; display: flex; flex-direction: column; flex: 1; padding: 16px;">
+        <div class="top" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+          <span class="ic" style="width: 42px; height: 42px; border-radius: 10px; background: var(--accent-tint); color: var(--accent); display: grid; place-items: center; flex: none;"><i data-lucide="shield"></i></span>
+          <div>
+            <div class="nm" style="font-weight: 700; font-size: .98rem; color: var(--ink);">Secure VPN Pro</div>
+            <span class="tag" style="font-size: .72rem; color: var(--accent); background: var(--accent-tint); font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-top: 3px; display: inline-block;">Sponsored</span>
+          </div>
+        </div>
+        <p class="desc" style="font-size: .84rem; color: var(--ink-soft); margin-bottom: 16px; overflow: hidden; flex: 1;">Protect your privacy online, encrypt web traffic, and bypass restrictions with our premium client.</p>
+        <div class="foot" style="display: flex; align-items: center; justify-content: space-between; font-size: .82rem; border-top: 1px solid var(--line); padding-top: 12px; color: var(--ink-faint);">
+          <span class="size" style="display: flex; align-items: center; gap: 5px;"><i data-lucide="hard-drive" style="width:14px; height:14px;"></i>14.2 MB</span>
+          <span class="go" style="color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 2px;">Download <i data-lucide="arrow-right" style="width:14px; height:14px;"></i></span>
+        </div>
+      </div>
+    <% } else { %>
+      <!-- Mock Horizontal Banner -->
+      <div class="banner-inner" style="display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; padding: 16px;">
+        <span class="ic" style="background: var(--accent-tint); color: var(--accent); width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; flex: none;"><i data-lucide="sparkles"></i></span>
+        <div style="flex: 1;">
+          <div style="font-weight: 700; font-size: 0.95rem; color: var(--ink);">SpeedUp PC 2026</div>
+          <div style="font-size: 0.8rem; color: var(--ink-soft); margin-top: 2px;">Clean junk files, optimize system memory, and boost Windows boot speed.</div>
+        </div>
+        <span class="btn" style="height: 36px; padding: 0 16px; font-size: 0.82rem; border-radius: 8px; border: 1px solid var(--line); font-weight: 600; display: inline-flex; align-items: center; background: var(--surface); color: var(--ink); flex: none;">Get Free</span>
+      </div>
+    <% } %>
+  </div>
 </div>
 <% } %>

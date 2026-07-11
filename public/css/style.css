@@ -1411,3 +1411,75 @@ footer.site {
   width: 18px;
   height: 18px;
 }
+
+/* ── Pro Ad Placements & Placeholders ── */
+.ad-placement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  background: var(--surface-2);
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 28px 0;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.ad-placement .ad-lbl {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+}
+
+.ad-placement .ad-placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-faint);
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+
+.ad-placement .ad-placeholder-content i {
+  width: 24px;
+  height: 24px;
+  opacity: 0.6;
+}
+
+.ad-placement .ad-placeholder-content span {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Auto-hide the placeholder content when the Adsterra container is populated with an ad */
+.ad-placement .ad-container-el:not(:empty) ~ .ad-placeholder-content {
+  display: none !important;
+}
+
+/* Remove dotted background and borders when ad is successfully loaded */
+.ad-placement:has(.ad-container-el:not(:empty)) {
+  background: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  min-height: auto !important;
+}
+
+.banner-placement {
+  min-height: 90px;
+  width: 100%;
+}
