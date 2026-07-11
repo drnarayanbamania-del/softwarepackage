@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-hd">
+    <h2>Login Attempt History (Last 100 entries)</h2>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Username</th>
+        <th>IP Address</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (logs.length === 0) { %>
+        <tr>
+          <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">No login logs available.</td>
+        </tr>
+      <% } %>
+      <% logs.forEach(function(l){ %>
+        <tr>
+          <td class="num"><%= new Date(l.timestamp).toLocaleString() %></td>
+          <td><strong><%= l.username %></strong></td>
+          <td class="num"><%= l.ip_address || 'Unknown' %></td>
+          <td>
+            <span class="ok-note" style="background: <%= l.status === 'SUCCESS' ? '#e8f5ec' : (l.status === 'LOCKED' ? '#fff9e6' : '#fdeaea') %>; color: <%= l.status === 'SUCCESS' ? 'var(--success)' : (l.status === 'LOCKED' ? '#b8860b' : 'var(--danger)') %>; border: 1px solid <%= l.status === 'SUCCESS' ? '#a9dfbb' : (l.status === 'LOCKED' ? '#ffe0b2' : '#fcc') %>;">
+              <%= l.status %>
+            </span>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>

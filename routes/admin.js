@@ -20,9 +20,61 @@ function auth(req, res, next){ if (req.session.admin) return next(); res.redirec
 router.get('/login', (req, res) => res.render('admin/login', { title: 'Admin Login', error: null, layout: false }));
 router.post('/login', (req, res) => {
   const db = req.app.locals.db;
-  const u = db.prepare('SELECT * FROM admin_users WHERE username=?').get(req.body.username);
-  if (!u || !bcrypt.compareSync(req.body.password, u.password_hash))
+  const username = req.body.username;
+  const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+  // 1. IP Rate Limiting: max 15 attempts in 5 minutes
+  const ipLimitTime = new Date(Date.now() - 5 * 60 * 1000).toISOString();
+  const ipAttempts = db.prepare('SELECT COUNT(*) c FROM admin_login_logs WHERE ip_address=? AND timestamp > ?').get(ip, ipLimitTime).c;
+  if (ipAttempts >= 15) {
+    return res.render('admin/login', { title: 'Admin Login', error: 'Too many attempts from this IP. Try again in 5 minutes.', layout: false });
+  }
+
+  // 2. Lookup user
+  const u = db.prepare('SELECT * FROM admin_users WHERE username=?').get(username);
+
+  // 3. Check Account Lockout
+  if (u && u.lockout_until) {
+    const lockoutTime = new Date(u.lockout_until).getTime();
+    if (lockoutTime > Date.now()) {
+      const minutesLeft = Math.ceil((lockoutTime - Date.now()) / (60 * 1000));
+      db.prepare('INSERT INTO admin_login_logs (username, ip_address, status) VALUES (?, ?, ?)')
+        .run(username, ip, 'LOCKED');
+      return res.render('admin/login', { title: 'Admin Login', error: `Account is locked. Try again in ${minutesLeft} minutes.`, layout: false });
+    } else {
+      // Lockout expired, reset failed attempts
+      db.prepare('UPDATE admin_users SET failed_attempts=0, lockout_until=NULL WHERE id=?').run(u.id);
+      u.failed_attempts = 0;
+      u.lockout_until = null;
+    }
+  }
+
+  // 4. Verify credentials
+  if (!u || !bcrypt.compareSync(req.body.password, u.password_hash)) {
+    if (u) {
+      const newFailedAttempts = (u.failed_attempts || 0) + 1;
+      let lockoutTimeStr = null;
+      let errorMsg = 'Invalid credentials';
+      if (newFailedAttempts >= 5) {
+        const lockoutUntil = new Date(Date.now() + 15 * 60 * 1000); // 15 mins
+        lockoutTimeStr = lockoutUntil.toISOString();
+        errorMsg = 'Account locked due to too many failed attempts. Try again in 15 minutes.';
+      } else {
+        errorMsg = `Invalid credentials. ${5 - newFailedAttempts} attempts remaining.`;
+      }
+      db.prepare('UPDATE admin_users SET failed_attempts=?, lockout_until=? WHERE id=?')
+        .run(newFailedAttempts, lockoutTimeStr, u.id);
+    }
+    db.prepare('INSERT INTO admin_login_logs (username, ip_address, status) VALUES (?, ?, ?)')
+      .run(username, ip, 'FAILED');
     return res.render('admin/login', { title: 'Admin Login', error: 'Invalid credentials', layout: false });
+  }
+
+  // 5. Successful login
+  db.prepare('UPDATE admin_users SET failed_attempts=0, lockout_until=NULL WHERE id=?').run(u.id);
+  db.prepare('INSERT INTO admin_login_logs (username, ip_address, status) VALUES (?, ?, ?)')
+    .run(username, ip, 'SUCCESS');
+
   req.session.admin = { id: u.id, username: u.username };
   res.redirect('/9300/admin');
 });
@@ -119,6 +171,12 @@ router.post('/settings', (req, res) => {
   });
   fs.writeFileSync(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, 2));
   res.redirect('/9300/admin/settings?saved=1');
+});
+
+router.get('/audit-logs', (req, res) => {
+  const db = req.app.locals.db;
+  const logs = db.prepare('SELECT * FROM admin_login_logs ORDER BY timestamp DESC LIMIT 100').all();
+  res.render('admin/audit-logs', { title: 'Audit Logs', logs, layout: 'admin/layout' });
 });
 
 module.exports = router;
