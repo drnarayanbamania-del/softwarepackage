@@ -382,7 +382,8 @@ section.block {
   align-items: center;
   gap: 5px;
   padding: 0 9px;
-  background: #eceaf4;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
   position: relative;
   z-index: 2;
 }
@@ -551,7 +552,7 @@ section.block {
 }
 
 .shot .sb.mock-browser {
-  background: #f1f0f6;
+  background: var(--surface-2);
   display: flex;
   flex-direction: column;
   padding: 8px;
@@ -559,8 +560,8 @@ section.block {
 
 .shot .sb.mock-browser .m-omni {
   height: 16px;
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 4px;
   margin-bottom: 8px;
 }
