@@ -1,4 +1,4 @@
-<div class="bar"><a href="/admin/software/new" class="btn-p"><i data-lucide="plus"></i>Add software</a></div>
+<div class="bar"><a href="/9300/admin/software/new" class="btn-p"><i data-lucide="plus"></i>Add software</a></div>
 <div class="card"><table>
   <thead><tr><th>Name</th><th>Category</th><th>Shot</th><th>Version</th><th>Downloads</th><th></th></tr></thead><tbody>
   <% rows.forEach(function(s){ %>
@@ -6,8 +6,8 @@
     <td><% if (s.screenshot){ %><i data-lucide="check" style="width:16px;color:#2f8a5b"></i><% } else { %><span class="muted">—</span><% } %></td>
     <td><%= s.version||'—' %></td><td><%= s.download_count %></td>
     <td class="ra">
-      <a href="/admin/software/<%= s.id %>/edit" class="ib"><i data-lucide="pencil"></i></a>
-      <form method="post" action="/admin/software/<%= s.id %>/delete" onsubmit="return confirm('Delete <%= s.name %>?')"><button class="ib del"><i data-lucide="trash-2"></i></button></form>
+      <a href="/9300/admin/software/<%= s.id %>/edit" class="ib"><i data-lucide="pencil"></i></a>
+      <form method="post" action="/9300/admin/software/<%= s.id %>/delete" onsubmit="return confirm('Delete <%= s.name %>?')"><button class="ib del"><i data-lucide="trash-2"></i></button></form>
     </td></tr>
   <% }); %>
   <% if(!rows.length){ %><tr><td colspan="6" class="muted">No software yet.</td></tr><% } %>

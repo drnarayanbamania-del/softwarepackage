@@ -4,8 +4,9 @@
     ((a.pages && a.pages.includes(page)) || a.page === page);
 %>
 <% if (active) { %>
-<div class="ad" data-zone="<%= a.zoneId %>" role="complementary" aria-label="Advertisement">
-  <span class="ad-lbl">Advertisement</span>
-  <span class="ad-ph"><%= slot %> · <%= ads.provider %></span>
+<div class="ad-placement" style="margin: 16px 0; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 250px;">
+  <span class="ad-lbl" style="font-size: .64rem; font-weight: 700; text-transform: uppercase; color: var(--ad-label, #a09030); letter-spacing: .08em; margin-bottom: 8px; display: block;">Advertisement</span>
+  <script async="async" data-cfasync="false" src="https://pl30315640.effectivecpmnetwork.com/<%= a.zoneId %>/invoke.js"></script>
+  <div id="container-<%= a.zoneId %>"></div>
 </div>
 <% } %>

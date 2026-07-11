@@ -11,6 +11,12 @@
     document.documentElement.setAttribute('data-theme', theme);
   })();
 </script>
+<% if (ads.enabled && ads.popunder.enabled) { 
+     var pz = ads.popunder.zoneId;
+     var pPath = pz.substring(0,2) + '/' + pz.substring(2,4) + '/' + pz.substring(4,6) + '/' + pz;
+%>
+<script src="https://pl30315639.effectivecpmnetwork.com/<%= pPath %>.js"></script>
+<% } %>
 </head>
 <body class="dl-page">
 <header class="site"><div class="wrap hd" style="justify-content:space-between">
@@ -50,6 +56,7 @@
     loader: <%= config.download.loaderDurationSeconds %>,
     popunder: <%= ads.enabled && ads.popunder.enabled ? 'true':'false' %>,
     smartlink: <%= ads.enabled && ads.smartlink.enabled ? 'true':'false' %>,
+    smartlinkKey: '<%= ads.smartlink.zoneId %>',
     cap: <%= ads.popunder.frequencyCapPerSession || 1 %>
   };
 </script>

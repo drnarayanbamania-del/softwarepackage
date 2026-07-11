@@ -17,11 +17,11 @@
   "ads": {
     "provider": "adsterra",
     "enabled": true,
-    "popunder": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "page": "download", "frequencyCapPerSession": 1, "devices": ["desktop"] },
-    "smartlink": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "page": "download", "frequencyCapPerSession": 1, "devices": ["mobile"] },
-    "nativeBanner": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "pages": ["home", "search"] },
-    "banner": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "pages": ["softwareDetail"] },
-    "socialBar": { "enabled": true, "zoneId": "REPLACE_ZONE_ID", "page": "download", "dismissible": true }
+    "popunder": { "enabled": true, "zoneId": "e9078353fbf763bf47d7b62ea205b61b", "page": "download", "frequencyCapPerSession": 1, "devices": ["desktop"] },
+    "smartlink": { "enabled": true, "zoneId": "23fa7e66f70166cb2714e8de47ab99a0", "page": "download", "frequencyCapPerSession": 1, "devices": ["mobile"] },
+    "nativeBanner": { "enabled": true, "zoneId": "c332f3d44eb674086bf792d26ae9c296", "pages": ["home", "search"] },
+    "banner": { "enabled": true, "zoneId": "c332f3d44eb674086bf792d26ae9c296", "pages": ["softwareDetail"] },
+    "socialBar": { "enabled": true, "zoneId": "e9078353fbf763bf47d7b62ea205b61b", "page": "download", "dismissible": true }
   },
   "admin": {
     "sessionSecret": "e20b3ea70ff38bf1b34c26a578eeef62"

@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const uploadFields = upload.fields([{ name: 'icon' }, { name: 'file' }, { name: 'screenshot' }]);
 
-function auth(req, res, next){ if (req.session.admin) return next(); res.redirect('/admin/login'); }
+function auth(req, res, next){ if (req.session.admin) return next(); res.redirect('/9300/admin/login'); }
 
 router.get('/login', (req, res) => res.render('admin/login', { title: 'Admin Login', error: null, layout: false }));
 router.post('/login', (req, res) => {
@@ -24,9 +24,9 @@ router.post('/login', (req, res) => {
   if (!u || !bcrypt.compareSync(req.body.password, u.password_hash))
     return res.render('admin/login', { title: 'Admin Login', error: 'Invalid credentials', layout: false });
   req.session.admin = { id: u.id, username: u.username };
-  res.redirect('/admin');
+  res.redirect('/9300/admin');
 });
-router.get('/logout', (req, res) => { req.session.destroy(() => res.redirect('/admin/login')); });
+router.get('/logout', (req, res) => { req.session.destroy(() => res.redirect('/9300/admin/login')); });
 
 router.use(auth);
 
@@ -60,7 +60,7 @@ router.post('/software/new', uploadFields, (req, res) => {
   db.prepare(`INSERT INTO software (name,slug,category_id,short_description,full_description,version,size,icon_image,screenshot,file_path,is_featured,is_new)
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`).run(b.name, slug(b.name), b.category_id||null, b.short_description, b.full_description,
       b.version, b.size, icon, shot, file, b.is_featured?1:0, b.is_new?1:0);
-  res.redirect('/admin/software');
+  res.redirect('/9300/admin/software');
 });
 router.get('/software/:id/edit', (req, res) => {
   const db = req.app.locals.db;
@@ -78,7 +78,7 @@ router.post('/software/:id/edit', uploadFields, (req, res) => {
     icon_image=?,screenshot=?,file_path=?,is_featured=?,is_new=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`)
     .run(b.name, slug(b.name), b.category_id||null, b.short_description, b.full_description, b.version, b.size,
       icon, shot, file, b.is_featured?1:0, b.is_new?1:0, req.params.id);
-  res.redirect('/admin/software');
+  res.redirect('/9300/admin/software');
 });
 router.post('/software/:id/delete', (req, res) => {
   const db = req.app.locals.db;
@@ -87,7 +87,7 @@ router.post('/software/:id/delete', (req, res) => {
     [sw.icon_image, sw.screenshot, sw.file_path].forEach(p => { if (p && fs.existsSync(path.resolve(p))) fs.unlinkSync(path.resolve(p)); });
     db.prepare('DELETE FROM software WHERE id=?').run(req.params.id);
   }
-  res.redirect('/admin/software');
+  res.redirect('/9300/admin/software');
 });
 
 router.get('/categories', (req, res) => {
@@ -98,13 +98,13 @@ router.get('/categories', (req, res) => {
 });
 router.post('/categories/new', (req, res) => {
   try { req.app.locals.db.prepare('INSERT INTO categories (name,slug) VALUES (?,?)').run(req.body.name, slug(req.body.name)); } catch(e){}
-  res.redirect('/admin/categories');
+  res.redirect('/9300/admin/categories');
 });
 router.post('/categories/:id/delete', (req, res) => {
   const db = req.app.locals.db;
   db.prepare('UPDATE software SET category_id=NULL WHERE category_id=?').run(req.params.id);
   db.prepare('DELETE FROM categories WHERE id=?').run(req.params.id);
-  res.redirect('/admin/categories');
+  res.redirect('/9300/admin/categories');
 });
 
 router.get('/settings', (req, res) => res.render('admin/settings', { title: 'Settings', cfg: config, saved: req.query.saved, layout: 'admin/layout' }));
@@ -118,7 +118,7 @@ router.post('/settings', (req, res) => {
     if (b['zone_'+k] !== undefined) config.ads[k].zoneId = b['zone_'+k];
   });
   fs.writeFileSync(path.resolve(__dirname, '..', 'config.json'), JSON.stringify(config, null, 2));
-  res.redirect('/admin/settings?saved=1');
+  res.redirect('/9300/admin/settings?saved=1');
 });
 
 module.exports = router;

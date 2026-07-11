@@ -42,13 +42,13 @@ app.use((req, res, next) => {
 
 app.use('/', require('./routes/public'));
 app.use('/api', require('./routes/api'));
-app.use('/admin', require('./routes/admin'));
+app.use('/9300/admin', require('./routes/admin'));
 
 app.use((req, res) => res.status(404).render('404', { title: 'Not found' }));
 
 app.listen(PORT, () => {
   console.log('\n  Bamania\'s Software Hub');
   console.log('  http://localhost:' + PORT);
-  console.log('  Admin: http://localhost:' + PORT + '/admin  (admin / admin123)\n');
+  console.log('  Admin: http://localhost:' + PORT + '/9300/admin  (admin / admin123)\n');
 });
 module.exports = app;

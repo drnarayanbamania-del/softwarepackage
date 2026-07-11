@@ -1,5 +1,5 @@
 <form class="card form" method="post" enctype="multipart/form-data"
-  action="/admin/software<%= sw ? '/'+sw.id+'/edit' : '/new' %>">
+  action="/9300/admin/software<%= sw ? '/'+sw.id+'/edit' : '/new' %>">
   <label>Name</label><input name="name" required value="<%= sw?sw.name:'' %>">
   <div class="row">
     <div><label>Category</label><select name="category_id"><option value="">—</option>
@@ -21,5 +21,5 @@
     <label class="ck"><input type="checkbox" name="is_featured" <%= sw&&sw.is_featured?'checked':'' %>> Featured</label>
     <label class="ck"><input type="checkbox" name="is_new" <%= sw&&sw.is_new?'checked':'' %>> New</label>
   </div>
-  <div class="actions"><a href="/admin/software" class="btn-g">Cancel</a><button class="btn-p"><%= sw?'Save':'Create' %></button></div>
+  <div class="actions"><a href="/9300/admin/software" class="btn-g">Cancel</a><button class="btn-p"><%= sw?'Save':'Create' %></button></div>
 </form>

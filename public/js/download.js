@@ -62,14 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }, 100);
 
-  // Popunder script mock implementation / triggering click actions
-  if (CFG.popunder || CFG.smartlink) {
+  // Smartlink triggering click actions
+  if (CFG.smartlink && CFG.smartlinkKey) {
     let adTriggered = false;
-    document.addEventListener('click', function() {
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#dlBtn') || e.target.closest('.theme-picker') || e.target.closest('.logo')) return;
       if (!adTriggered) {
-        console.log("Triggering Adsterra popunder zone: " + (CFG.popunder ? "popunder" : "smartlink"));
-        // Simulating the popunder script opening a tab in background
-        // window.open('https://adsterra-destination-placeholder.com/zone/' + (CFG.popunder || CFG.smartlink), '_blank');
+        window.open('https://www.effectivecpmnetwork.com/w0wq3eigm7?key=' + CFG.smartlinkKey, '_blank');
         adTriggered = true;
       }
     });
