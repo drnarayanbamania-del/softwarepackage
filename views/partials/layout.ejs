@@ -13,12 +13,6 @@
     document.documentElement.setAttribute('data-theme', theme);
   })();
 </script>
-<% if (config.ads.enabled && config.ads.popunder.enabled) { 
-     var pz = config.ads.popunder.zoneId;
-     var pPath = pz.substring(0,2) + '/' + pz.substring(2,4) + '/' + pz.substring(4,6) + '/' + pz;
-%>
-<script src="https://pl30315639.effectivecpmnetwork.com/<%= pPath %>.js"></script>
-<% } %>
 </head>
 <body>
 <%- include('header') %>
