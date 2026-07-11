@@ -9,6 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const ready = document.getElementById('ready');
   const dlBtn = document.getElementById('dlBtn');
 
+  // Prevent popunder script from hijacking the download button click
+  if (dlBtn) {
+    dlBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
+
   // Adsterra SocialBar Close
   const closeSocial = document.getElementById('closeSocial');
   const socialbar = document.getElementById('socialbar');
